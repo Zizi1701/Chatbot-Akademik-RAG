@@ -103,12 +103,22 @@ python ingest_data.py
 
 ---
 
-### 6️⃣ Jalankan Chatbot 🎉
+### 6️⃣ Jalankan Chatbot (Terminal) 🎉
 
 Mulai chatbot dan lakukan percakapan:
 
 ```bash
 python chatbot.py
+```
+
+---
+
+### 7️⃣ Jalankan Web Chatbot 🎉
+
+Mulai web chatbot dan lakukan percakapan:
+
+```bash
+streamlit run app.py
 ```
 
 ---
