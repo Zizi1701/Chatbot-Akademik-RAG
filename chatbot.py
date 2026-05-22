@@ -20,7 +20,9 @@ def jalankan_chatbot():
     print("🚀 Memuat vectorstore...")
     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
     vectorstore = FAISS.load_local("vectorstore/faiss_index", embeddings, allow_dangerous_deserialization=True)
-    retriever = vectorstore.as_retriever(search_kwargs={"k": 6})
+    
+    # MODIFIKASI 1: Menggunakan MMR agar pencarian menyebar ke berbagai PDF (tidak tertutup file besar)
+    retriever = vectorstore.as_retriever(search_type="mmr", search_kwargs={"k": 6, "fetch_k": 20})
 
     print("🤖 Menyiapkan LLM Google Gemini...")
     llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0)
@@ -67,8 +69,14 @@ def jalankan_chatbot():
             print("\n📚 [Sumber]:")
             for doc in response["context"]:
                 halaman = doc.metadata.get('page', '?')
+                
+                # MODIFIKASI 2: Menarik nama file asli dari metadata
+                nama_file = os.path.basename(doc.metadata.get('source', 'Dokumen Tidak Diketahui'))
+                
                 kutipan = doc.page_content[:120].replace('\n', ' ')
-                print(f"  - Halaman {halaman}: \"{kutipan}...\"")
+                
+                # Cetak nama file beserta halamannya
+                print(f"  - {nama_file} (Halaman {halaman}): \"{kutipan}...\"")
         except Exception as e:
             print(f"\n❌ Error: {e}")
 
