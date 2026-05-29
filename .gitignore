@@ -1,4 +1,28 @@
-env/
+# ========================
+# RAHASIA & API KEYS (SANGAT PENTING!)
+# ========================
 .env
+.streamlit/secrets.toml
+*.pem
+*.key
+
+# ========================
+# Python
+# ========================
 __pycache__/
-vectorstore/
+*.pyc
+*.pyo
+*.pyd
+
+# ========================
+# Virtual Environments
+# ========================
+venv/
+env/
+.venv/
+
+# ========================
+# OS generated files (Mac/Windows)
+# ========================
+.DS_Store
+Thumbs.db
